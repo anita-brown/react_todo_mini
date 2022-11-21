@@ -4,7 +4,6 @@ import axios from "axios";
 import { ResponseData } from "../utils";
 import endPoint from "../utils";
 
-
 const TodoList = () => {
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -21,52 +20,52 @@ const TodoList = () => {
   useEffect(() => {
     getTasks();
   }, []);
-const getTasks = async () => {
-  try {
-    let response = await axios.get(endPoint);
-    let { items } = response.data;
-    if (items?.length > 0) {
-      setTasks(items);
+  const getTasks = async () => {
+    try {
+      let response = await axios.get(endPoint);
+      let { items } = response.data;
+      if (items?.length > 0) {
+        setTasks(items);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
-const postTask = async (input: string) => {
-  try {
-    const payload = {
-      task: input,
-    };
-    let postResponse: ResponseData = await axios.post(endPoint, payload);
-    getTasks();
-    return postResponse
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const postTask = async (input: string) => {
+    try {
+      const payload = {
+        task: input,
+      };
+      let postResponse: ResponseData = await axios.post(endPoint, payload);
+      getTasks();
+      return postResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-const updateTask = async (id: string) => {
-  try {
-    const update = {
-      isDone: true,
-    };
-    let updateResponse: ResponseData = await axios.patch(`${endPoint}/${id}`, update);
-    getTasks();
-    return updateResponse
-  } catch (error) {
-    console.log(error);
-  }
-};
-const deleteTask = async (id: string) => {
-  try {
-    let deleteResponse = await axios.delete(`${endPoint}/${id}`);
-    getTasks();
-    return deleteResponse
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const updateTask = async (id: string) => {
+    try {
+      const update = {
+        isDone: true,
+      };
+      let updateResponse: ResponseData = await axios.patch(`${endPoint}/${id}`, update);
+      getTasks();
+      return updateResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteTask = async (id: string) => {
+    try {
+      let deleteResponse = await axios.delete(`${endPoint}/${id}`);
+      getTasks();
+      return deleteResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex mt-[2rem] flex-col gap-[2rem] justify-center px-[20%] mt-[6rem]">
